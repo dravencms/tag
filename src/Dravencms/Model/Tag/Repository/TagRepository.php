@@ -5,15 +5,16 @@
 
 namespace Dravencms\Model\Tag\Repository;
 
-use App\Model\BaseRepository;
+use Dravencms\Locale\TLocalizedRepository;
 use Dravencms\Model\Tag\Entities\Tag;
 use Gedmo\Translatable\TranslatableListener;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Salamek\Cms\Models\ILocale;
 
-class TagRepository extends BaseRepository
+class TagRepository
 {
+    use TLocalizedRepository;
     /** @var \Kdyby\Doctrine\EntityRepository */
     private $tagRepository;
 
