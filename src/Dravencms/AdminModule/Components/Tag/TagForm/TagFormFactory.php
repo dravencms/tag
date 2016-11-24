@@ -17,10 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-namespace Dravencms\AdminModule\Components\Tag;
+namespace Dravencms\AdminModule\Components\Tag\TagForm;
 
 
-use App\Model\Tag\Entities\Tag;
+use Dravencms\Model\Tag\Entities\Tag;
 
 interface TagFormFactory
 {

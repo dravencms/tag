@@ -3,7 +3,7 @@
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
 
-namespace App\Model\Tag\Entities;
+namespace Dravencms\Model\Tag\Entities;
 
 use Dravencms\Model\Article\Entities\Article;
 use Dravencms\Model\Gallery\Entities\Picture;

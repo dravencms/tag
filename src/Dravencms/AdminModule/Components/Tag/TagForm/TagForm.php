@@ -18,12 +18,12 @@
  * MA 02110-1301  USA
  */
 
-namespace Dravencms\AdminModule\Components\Tag;
+namespace Dravencms\AdminModule\Components\Tag\TagForm;
 
 use Dravencms\Components\BaseFormFactory;
 use App\Model\Locale\Repository\LocaleRepository;
-use App\Model\Tag\Entities\Tag;
-use App\Model\Tag\Repository\TagRepository;
+use Dravencms\Model\Tag\Entities\Tag;
+use Dravencms\Model\Tag\Repository\TagRepository;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;

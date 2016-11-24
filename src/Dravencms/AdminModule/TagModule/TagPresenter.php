@@ -7,11 +7,11 @@
 
 namespace Dravencms\AdminModule\TagModule;
 
-use Dravencms\AdminModule\Components\Tag\TagFormFactory;
-use Dravencms\AdminModule\Components\Tag\TagGridFactory;
+use Dravencms\AdminModule\Components\Tag\TagForm\TagFormFactory;
+use Dravencms\AdminModule\Components\Tag\TagGrid\TagGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
-use App\Model\Tag\Entities\Tag;
-use App\Model\Tag\Repository\TagRepository;
+use Dravencms\Model\Tag\Entities\Tag;
+use Dravencms\Model\Tag\Repository\TagRepository;
 
 /**
  * Description of TagPresenter

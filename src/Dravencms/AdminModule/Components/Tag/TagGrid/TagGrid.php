@@ -19,11 +19,11 @@
  * MA 02110-1301  USA
  */
 
-namespace Dravencms\AdminModule\Components\Tag;
+namespace Dravencms\AdminModule\Components\Tag\TagGrid;
 
 use Dravencms\Components\BaseGridFactory;
 use App\Model\Locale\Repository\LocaleRepository;
-use App\Model\Tag\Repository\TagRepository;
+use Dravencms\Model\Tag\Repository\TagRepository;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Control;
 
