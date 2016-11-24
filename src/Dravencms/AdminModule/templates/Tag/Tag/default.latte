@@ -1,0 +1,7 @@
+{block #content}
+    <div class="page-header"><h1>{_$h1}</h1></div>
+    <p n:isAllowed="tag,edit">
+        <a n:href="Tag:edit" class="btn btn-primary"><i class="fa fa-plus"></i> {_"New tag"}</a>
+    </p>
+    {control gridTag}
+{/block}
