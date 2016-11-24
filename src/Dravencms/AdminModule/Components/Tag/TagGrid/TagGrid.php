@@ -21,18 +21,18 @@
 
 namespace Dravencms\AdminModule\Components\Tag\TagGrid;
 
-use Dravencms\Components\BaseGridFactory;
+use Dravencms\Components\BaseControl\BaseControl;
+use Dravencms\Components\BaseGrid\BaseGridFactory;
 use Dravencms\Model\Locale\Repository\LocaleRepository;
 use Dravencms\Model\Tag\Repository\TagRepository;
 use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Control;
 
 /**
  * Description of TagGrid
  *
  * @author Adam Schubert <adam.schubert@sg1-game.net>
  */
-class TagGrid extends Control
+class TagGrid extends BaseControl
 {
 
     /** @var BaseGridFactory */
