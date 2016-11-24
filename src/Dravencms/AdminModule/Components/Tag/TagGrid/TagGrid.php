@@ -22,7 +22,7 @@
 namespace Dravencms\AdminModule\Components\Tag\TagGrid;
 
 use Dravencms\Components\BaseGridFactory;
-use App\Model\Locale\Repository\LocaleRepository;
+use Dravencms\Model\Locale\Repository\LocaleRepository;
 use Dravencms\Model\Tag\Repository\TagRepository;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Control;

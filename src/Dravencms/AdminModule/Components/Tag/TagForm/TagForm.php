@@ -21,7 +21,7 @@
 namespace Dravencms\AdminModule\Components\Tag\TagForm;
 
 use Dravencms\Components\BaseFormFactory;
-use App\Model\Locale\Repository\LocaleRepository;
+use Dravencms\Model\Locale\Repository\LocaleRepository;
 use Dravencms\Model\Tag\Entities\Tag;
 use Dravencms\Model\Tag\Repository\TagRepository;
 use Kdyby\Doctrine\EntityManager;
