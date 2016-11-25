@@ -1,6 +1,6 @@
 {
   "name": "dravencms/tag",
-  "type": "library",
+  "type": "dravencms-package",
   "description": "Tag module for dravencms",
   "keywords": [
     "dravencms",
@@ -22,6 +22,19 @@
   "autoload": {
     "psr-0": {
       "Dravencms\\": "src/"
+    }
+  },
+  "extra": {
+    "dravencms": {
+      "configuration": {
+        "extensions": {
+          "timeline": "Dravencms\\Tag\\DI\\TagExtension"
+        }
+      },
+      "scripts": {
+        "post-install": "Dravencms\\Tag\\Script\\PostInstall",
+        "pre-uninstall": "Dravencms\\Tag\\Script\\PreUninstall"
+      }
     }
   }
 }
