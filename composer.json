@@ -28,7 +28,7 @@
     "dravencms": {
       "configuration": {
         "extensions": {
-          "timeline": "Dravencms\\Tag\\DI\\TagExtension"
+          "tag": "Dravencms\\Tag\\DI\\TagExtension"
         }
       },
       "scripts": {
