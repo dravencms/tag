@@ -1,1 +1,5 @@
 - Dravencms\Model\Tag\Repository\TagRepository
+
+- Dravencms\Model\Tag\Fixtures\AclOperationFixtures
+- Dravencms\Model\Tag\Fixtures\AclResourceFixtures
+- Dravencms\Model\Tag\Fixtures\AdminMenuFixtures
