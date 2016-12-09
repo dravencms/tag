@@ -32,80 +32,12 @@ class Tag extends Nette\Object
     private $name;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|Article[]
-     *
-     * @ORM\ManyToMany(targetEntity="\Dravencms\Model\Article\Entities\Article", mappedBy="tags")
-     */
-    private $articles;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection|Picture[]
-     *
-     * @ORM\ManyToMany(targetEntity="\Dravencms\Model\Gallery\Entities\Picture", mappedBy="tags")
-     */
-    private $galleryPictures;
-
-    /**
      * Tag constructor.
      * @param string $name
      */
     public function __construct($name)
     {
         $this->name = $name;
-    }
-
-
-    /**
-     * @param Article $article
-     */
-    public function addArticle(Article $article)
-    {
-        if ($this->articles->contains($article))
-        {
-            return;
-        }
-        $this->articles->add($article);
-        $article->addTag($this);
-    }
-
-    /**
-     * @param Article $article
-     */
-    public function removeArticle(Article $article)
-    {
-        if (!$this->articles->contains($article))
-        {
-            return;
-        }
-        $this->articles->removeElement($article);
-        $article->removeTag($this);
-    }
-
-
-    /**
-     * @param Picture $picture
-     */
-    public function addGalleryPicture(Picture $picture)
-    {
-        if ($this->galleryPictures->contains($picture))
-        {
-            return;
-        }
-        $this->galleryPictures->add($picture);
-        $picture->addTag($this);
-    }
-
-    /**
-     * @param Picture $picture
-     */
-    public function removeGalleryPicture(Picture $picture)
-    {
-        if (!$this->galleryPictures->contains($picture))
-        {
-            return;
-        }
-        $this->galleryPictures->removeElement($picture);
-        $picture->removeTag($this);
     }
 
     /**
