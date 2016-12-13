@@ -21,6 +21,7 @@ class AdminMenuFixtures extends AbstractFixture implements DependentFixtureInter
     {
         $child = new Menu('Tags', ':Admin:Tag:Tag', 'fa-tags', $this->getReference('user-acl-operation-tag-edit'));
         $manager->persist($child);
+        $manager->flush();
     }
     /**
      * Get the order of this fixture
