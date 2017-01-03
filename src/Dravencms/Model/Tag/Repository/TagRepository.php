@@ -51,6 +51,15 @@ class TagRepository
 
     /**
      * @param $name
+     * @return null|object
+     */
+    public function getOneByName($name)
+    {
+        return $this->tagRepository->findOneBy(['name' => $name]);
+    }
+
+    /**
+     * @param $name
      * @param ILocale $locale
      * @param Tag|null $ignoreTag
      * @return mixed
