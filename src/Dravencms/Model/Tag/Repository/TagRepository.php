@@ -33,7 +33,7 @@ class TagRepository
 
     /**
      * @param $id
-     * @return mixed|null|object
+     * @return Tag[]
      */
     public function getById($id)
     {
@@ -42,7 +42,7 @@ class TagRepository
 
     /**
      * @param $id
-     * @return null|object
+     * @return null|Tag
      */
     public function getOneById($id)
     {
@@ -51,7 +51,7 @@ class TagRepository
 
     /**
      * @param $name
-     * @return null|object
+     * @return null|Tag
      */
     public function getOneByName($name)
     {
@@ -62,7 +62,7 @@ class TagRepository
      * @param $name
      * @param ILocale $locale
      * @param Tag|null $ignoreTag
-     * @return mixed
+     * @return boolean
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function isNameFree($name, ILocale $locale, Tag $ignoreTag = null)
