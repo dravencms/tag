@@ -10,6 +10,7 @@ namespace Dravencms\AdminModule\TagModule;
 use Dravencms\AdminModule\Components\Tag\TagForm\TagFormFactory;
 use Dravencms\AdminModule\Components\Tag\TagGrid\TagGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
+use Dravencms\Flash;
 use Dravencms\Model\Tag\Entities\Tag;
 use Dravencms\Model\Tag\Repository\TagRepository;
 
@@ -53,35 +54,35 @@ class TagPresenter extends SecuredPresenter
 
             $this->tag = $tag;
 
-            $this->template->h1 = sprintf('Edit tag „%s“', $tag->getName());
+            $this->template->h1 = sprintf('Edit tag „%s“', $tag->getIdentifier());
         } else {
             $this->template->h1 = 'New tag';
         }
     }
 
     /**
-     * @return \AdminModule\Components\Tag\TagForm
+     * @return \Dravencms\AdminModule\Components\Tag\TagForm\TagForm
      */
     protected function createComponentFormTag()
     {
         $control = $this->tagFormFactory->create($this->tag);
         $control->onSuccess[] = function()
         {
-            $this->flashMessage('Tag has been saved.', 'alert-success');
+            $this->flashMessage('Tag has been saved.', Flash::SUCCESS);
             $this->redirect('Tag:');
         };
         return $control;
     }
 
     /**
-     * @return \AdminModule\Components\Tag\TagGrid
+     * @return \Dravencms\AdminModule\Components\Tag\TagGrid\TagGrid
      */
     public function createComponentGridTag()
     {
         $control = $this->tagGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Tag has been deleted.', 'alert-success');
+            $this->flashMessage('Tag has been deleted.', Flash::SUCCESS);
             $this->redirect('Tag:');
         };
         return $control;

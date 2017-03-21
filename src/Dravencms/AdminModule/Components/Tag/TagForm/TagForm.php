@@ -24,7 +24,9 @@ use Dravencms\Components\BaseControl\BaseControl;
 use Dravencms\Components\BaseForm\BaseFormFactory;
 use Dravencms\Model\Locale\Repository\LocaleRepository;
 use Dravencms\Model\Tag\Entities\Tag;
+use Dravencms\Model\Tag\Entities\TagTranslation;
 use Dravencms\Model\Tag\Repository\TagRepository;
+use Dravencms\Model\Tag\Repository\TagTranslationRepository;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Form;
 
@@ -47,6 +49,9 @@ class TagForm extends BaseControl
     /** @var LocaleRepository */
     private $localeRepository;
 
+    /** @var TagTranslationRepository */
+    private $tagTranslationRepository;
+
     /** @var Tag */
     private $tag = null;
 
@@ -58,6 +63,7 @@ class TagForm extends BaseControl
      * @param BaseFormFactory $baseFormFactory
      * @param EntityManager $entityManager
      * @param TagRepository $tagRepository
+     * @param TagTranslationRepository $tagTranslationRepository
      * @param LocaleRepository $localeRepository
      * @param Tag|null $tag
      */
@@ -65,6 +71,7 @@ class TagForm extends BaseControl
         BaseFormFactory $baseFormFactory,
         EntityManager $entityManager,
         TagRepository $tagRepository,
+        TagTranslationRepository $tagTranslationRepository,
         LocaleRepository $localeRepository,
         Tag $tag = null
     ) {
@@ -74,18 +81,18 @@ class TagForm extends BaseControl
         $this->baseFormFactory = $baseFormFactory;
         $this->entityManager = $entityManager;
         $this->tagRepository = $tagRepository;
+        $this->tagTranslationRepository = $tagTranslationRepository;
         $this->localeRepository = $localeRepository;
 
 
         if ($this->tag) {
-            $defaults = [];
+            $defaults = [
+                'identifier' => $this->tag->getIdentifier()
+            ];
 
-            $repository = $this->entityManager->getRepository('Gedmo\Translatable\Entity\Translation');
-            $defaults += $repository->findTranslations($this->tag);
-
-            $defaultLocale = $this->localeRepository->getDefault();
-            if ($defaultLocale) {
-                $defaults[$defaultLocale->getLanguageCode()]['name'] = $this->tag->getName();
+            foreach ($this->tag->getTranslations() AS $translation)
+            {
+                $defaults[$translation->getLocale()->getLanguageCode()]['name'] = $translation->getName();
             }
 
             $this['form']->setDefaults($defaults);
@@ -93,7 +100,7 @@ class TagForm extends BaseControl
     }
 
     /**
-     * @return \Dravencms\Components\BaseForm
+     * @return \Dravencms\Components\BaseForm\BaseForm
      */
     protected function createComponentForm()
     {
@@ -105,6 +112,9 @@ class TagForm extends BaseControl
                 ->setRequired('Please enter tag name.')
                 ->addRule(Form::MAX_LENGTH, 'Tag name name is too long.', 255);
         }
+
+        $form->addText('identifier')
+            ->setRequired('Please fill in an identifier');
 
         $form->addSubmit('send');
 
@@ -120,8 +130,13 @@ class TagForm extends BaseControl
     public function editFormValidate(Form $form)
     {
         $values = $form->getValues();
+
+        if (!$this->tagRepository->isIdentifierFree($values->identifier, $this->tag)) {
+            $form->addError('Tento identifier je již zabrán.');
+        }
+
         foreach ($this->localeRepository->getActive() AS $activeLocale) {
-            if (!$this->tagRepository->isNameFree($values->{$activeLocale->getLanguageCode()}->name, $activeLocale, $this->tag)) {
+            if (!$this->tagTranslationRepository->isNameFree($values->{$activeLocale->getLanguageCode()}->name, $activeLocale, $this->tag)) {
                 $form->addError('Tento název je již zabrán.');
             }
         }
@@ -139,23 +154,33 @@ class TagForm extends BaseControl
     {
         $values = $form->getValues();
 
-
         if ($this->tag) {
             $tag = $this->tag;
-            //$tag->setName($values->name);
+            $tag->setIdentifier($values->identifier);
         } else {
-            $defaultLocale = $this->localeRepository->getDefault();
-            $tag = new Tag($values->{$defaultLocale->getLanguageCode()}->name);
-        }
-
-        $repository = $this->entityManager->getRepository('Gedmo\\Translatable\\Entity\\Translation');
-
-        foreach ($this->localeRepository->getActive() AS $activeLocale) {
-            $repository->translate($tag, 'name', $activeLocale->getLanguageCode(), $values->{$activeLocale->getLanguageCode()}->name);
+            $tag = new Tag($values->identifier);
         }
 
         $this->entityManager->persist($tag);
 
+        $this->entityManager->flush();
+
+
+        foreach ($this->localeRepository->getActive() AS $activeLocale) {
+            if ($bonusTranslation = $this->tagTranslationRepository->getTranslation($tag, $activeLocale))
+            {
+                $bonusTranslation->setName($values->{$activeLocale->getLanguageCode()}->name);
+            }
+            else
+            {
+                $bonusTranslation = new TagTranslation(
+                    $tag,
+                    $activeLocale,
+                    $values->{$activeLocale->getLanguageCode()}->name
+                );
+            }
+            $this->entityManager->persist($bonusTranslation);
+        }
         $this->entityManager->flush();
 
         $this->onSuccess();

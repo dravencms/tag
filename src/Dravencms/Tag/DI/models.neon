@@ -1,4 +1,5 @@
 - Dravencms\Model\Tag\Repository\TagRepository
+- Dravencms\Model\Tag\Repository\TagTranslationRepository
 
 - Dravencms\Model\Tag\Fixtures\AclOperationFixtures
 - Dravencms\Model\Tag\Fixtures\AclResourceFixtures

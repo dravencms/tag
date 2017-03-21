@@ -5,8 +5,7 @@
 
 namespace Dravencms\Model\Tag\Entities;
 
-use Dravencms\Model\Article\Entities\Article;
-use Dravencms\Model\Gallery\Entities\Picture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -26,33 +25,47 @@ class Tag extends Nette\Object
 
     /**
      * @var string
-     * @Gedmo\Translatable
      * @ORM\Column(type="string",length=255, nullable=false)
      */
-    private $name;
+    private $identifier;
+
+    /**
+     * @var ArrayCollection|TagTranslation[]
+     * @ORM\OneToMany(targetEntity="TagTranslation", mappedBy="tag",cascade={"persist", "remove"})
+     */
+    private $translations;
 
     /**
      * Tag constructor.
-     * @param string $name
+     * @param string $identifier
      */
-    public function __construct($name)
+    public function __construct($identifier)
     {
-        $this->name = $name;
+        $this->identifier = $identifier;
+        $this->translations = new ArrayCollection();
     }
 
     /**
-     * @param string $name
+     * @param string $identifier
      */
-    public function setName($name)
+    public function setIdentifier($identifier)
     {
-        $this->name = $name;
+        $this->identifier = $identifier;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getIdentifier()
     {
-        return $this->name;
+        return $this->identifier;
+    }
+
+    /**
+     * @return ArrayCollection|TagTranslation[]
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
     }
 }

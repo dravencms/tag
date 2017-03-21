@@ -7,15 +7,16 @@ namespace Dravencms\Model\Tag\Repository;
 
 use Dravencms\Locale\TLocalizedRepository;
 use Dravencms\Model\Tag\Entities\Tag;
+use Dravencms\Model\Tag\Entities\TagTranslation;
 use Gedmo\Translatable\TranslatableListener;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Dravencms\Model\Locale\Entities\ILocale;
 
-class TagRepository
+class TagTranslationRepository
 {
     /** @var \Kdyby\Doctrine\EntityRepository */
-    private $tagRepository;
+    private $tagTranslationRepository;
 
     /** @var EntityManager */
     private $entityManager;
@@ -27,49 +28,53 @@ class TagRepository
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->tagRepository = $entityManager->getRepository(Tag::class);
+        $this->tagTranslationRepository = $entityManager->getRepository(TagTranslation::class);
     }
 
     /**
      * @param $id
-     * @return Tag[]
+     * @return TagTranslation[]
      */
     public function getById($id)
     {
-        return $this->tagRepository->findBy(['id' => $id]);
+        return $this->tagTranslationRepository->findBy(['id' => $id]);
     }
 
     /**
      * @param $id
-     * @return null|Tag
+     * @return null|TagTranslation
      */
     public function getOneById($id)
     {
-        return $this->tagRepository->find($id);
+        return $this->tagTranslationRepository->find($id);
     }
 
     /**
      * @param $name
-     * @return null|Tag
+     * @return null|TagTranslation
      */
     public function getOneByName($name)
     {
-        return $this->tagRepository->findOneBy(['name' => $name]);
+        return $this->tagTranslationRepository->findOneBy(['name' => $name]);
     }
 
     /**
-     * @param $identifier
+     * @param $name
+     * @param ILocale $locale
      * @param Tag|null $ignoreTag
      * @return boolean
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function isIdentifierFree($identifier, Tag $ignoreTag = null)
+    public function isNameFree($name, ILocale $locale, Tag $ignoreTag = null)
     {
-        $qb = $this->tagRepository->createQueryBuilder('t')
-            ->select('t')
-            ->where('t.identifier = :identifier')
+        $qb = $this->tagTranslationRepository->createQueryBuilder('tt')
+            ->select('tt')
+            ->join('tt.tag', 't')
+            ->where('tt.name = :name')
+            ->andWhere('tt.locale = :locale')
             ->setParameters([
-                'identifier' => $identifier
+                'name' => $name,
+                'locale' => $locale
             ]);
 
         if ($ignoreTag)
@@ -84,20 +89,21 @@ class TagRepository
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @param Tag $tag
+     * @param ILocale $locale
+     * @return null|TagTranslation
      */
-    public function getTagQueryBuilder()
+    public function getTranslation(Tag $tag, ILocale $locale)
     {
-        $qb = $this->tagRepository->createQueryBuilder('t')
-            ->select('t');
-        return $qb;
+        return $this->tagTranslationRepository->findOneBy(['tag' => $tag, 'locale' => $locale]);
     }
 
     /**
-     * @return array
+     * @param ILocale $locale
+     * @return TagTranslation[]
      */
-    public function getPairs()
+    public function getAll(ILocale $locale)
     {
-        return $this->tagRepository->findPairs('identifier');
+        return $this->tagTranslationRepository->findBy(['locale' => $locale]);
     }
 }
