@@ -164,8 +164,7 @@ class TagForm extends BaseControl
         $this->entityManager->persist($tag);
 
         $this->entityManager->flush();
-
-
+        
         foreach ($this->localeRepository->getActive() AS $activeLocale) {
             if ($bonusTranslation = $this->tagTranslationRepository->getTranslation($tag, $activeLocale))
             {

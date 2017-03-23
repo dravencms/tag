@@ -49,12 +49,12 @@ class TagRepository
     }
 
     /**
-     * @param $name
+     * @param $identifier
      * @return null|Tag
      */
-    public function getOneByName($name)
+    public function getOneByIdentifier($identifier)
     {
-        return $this->tagRepository->findOneBy(['name' => $name]);
+        return $this->tagRepository->findOneBy(['identifier' => $identifier]);
     }
 
     /**
