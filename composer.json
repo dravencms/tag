@@ -15,7 +15,7 @@
     }
   ],
   "require": {
-    "dravencms/locale": "@dev"
+    "dravencms/locale": "^v1.0"
   },
   "require-dev": {
     "nette/tester": "@dev"
