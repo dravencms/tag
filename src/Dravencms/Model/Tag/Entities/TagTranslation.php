@@ -20,8 +20,9 @@ use Nette;
  * @ORM\Entity
  * @ORM\Table(name="tagTagTranslation")
  */
-class TagTranslation extends Nette\Object
+class TagTranslation
 {
+    use Nette\SmartObject;
     use Identifier;
     use TimestampableEntity;
 

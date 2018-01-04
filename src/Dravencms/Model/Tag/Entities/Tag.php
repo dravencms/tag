@@ -18,8 +18,9 @@ use Nette;
  * @ORM\Entity
  * @ORM\Table(name="tagTag")
  */
-class Tag extends Nette\Object
+class Tag
 {
+    use Nette\SmartObject;
     use Identifier;
     use TimestampableEntity;
 

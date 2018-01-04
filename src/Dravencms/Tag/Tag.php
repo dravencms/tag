@@ -2,13 +2,15 @@
 
 namespace Dravencms\Tag;
 
+use Nette;
 
 /**
  * Class Tag
  * @package Dravencms\Tag
  */
-class Tag extends \Nette\Object
+class Tag
 {
+    use Nette\SmartObject;
 
     public function __construct()
     {
