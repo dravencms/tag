@@ -30,6 +30,11 @@
       "configuration": {
         "extensions": {
           "tag": "Dravencms\\Tag\\DI\\TagExtension"
+        },
+        "doctrine":{
+          "metadata": {
+            "Dravencms\\Model\\Tag": "%appDir%/../vendor/dravencms/tag/src/Dravencms/Model/Tag"
+          }
         }
       },
       "scripts": {
