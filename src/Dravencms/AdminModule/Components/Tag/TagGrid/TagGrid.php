@@ -115,20 +115,6 @@ class TagGrid extends BaseControl
     }
 
     /**
-     * @param $action
-     * @param $ids
-     */
-    public function gridOperationsHandler($action, $ids)
-    {
-        switch ($action)
-        {
-            case 'delete':
-                $this->handleDelete($ids);
-                break;
-        }
-    }
-
-    /**
      * @param $id
      * @throws \Exception
      */
