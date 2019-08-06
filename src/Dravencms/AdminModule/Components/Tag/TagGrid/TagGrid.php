@@ -84,38 +84,32 @@ class TagGrid extends BaseControl
     {
         $grid = $this->baseGridFactory->create($this, $name);
 
-        $grid->setModel($this->tagRepository->getTagQueryBuilder());
+        $grid->setDataSource($this->tagRepository->getTagQueryBuilder());
 
         $grid->addColumnText('identifier', 'Identifier')
-            ->setFilterText()
-            ->setSuggestion();
-
-        $grid->addColumnDate('updatedAt', 'Last edit', $this->currentLocale->getDateTimeFormat())
             ->setSortable()
-            ->setFilterDate();
-        $grid->getColumn('updatedAt')->cellPrototype->class[] = 'center';
+            ->setFilterText();
 
         if ($this->presenter->isAllowed('tag', 'edit')) {
-            $grid->addActionHref('edit', 'Upravit')
-                ->setIcon('pencil');
+            $grid->addAction('edit', '')
+                ->setIcon('pencil')
+                ->setTitle('Upravit')
+                ->setClass('btn btn-xs btn-primary');
         }
 
         if ($this->presenter->isAllowed('tag', 'delete')) {
-            $grid->addActionHref('delete', 'Smazat', 'delete!')
-                ->setCustomHref(function($row){
-                    return $this->link('delete!', $row->getId());
-                })
-                ->setIcon('trash-o')
-                ->setConfirm(function ($row) {
-                    return ['Opravdu chcete smazat tag %s ?', $row->getIdentifier()];
-                });
-
-
-            $operations = ['delete' => 'Smazat'];
-            $grid->setOperation($operations, [$this, 'gridOperationsHandler'])
-                ->setConfirm('delete', 'Opravu chcete smazat %i locales ?');
+            $grid->addAction('delete', '', 'delete!')
+                ->setIcon('trash')
+                ->setTitle('Smazat')
+                ->setClass('btn btn-xs btn-danger ajax')
+                ->setConfirm('Do you really want to delete row %s?', 'name');
+            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'handleDelete'];
         }
-        $grid->setExport();
+
+        $grid->addExportCsvFiltered('Csv export (filtered)', 'tag_filtered.csv')
+            ->setTitle('Csv export (filtered)');
+        $grid->addExportCsv('Csv export', 'tag_all.csv')
+            ->setTitle('Csv export');
 
         return $grid;
     }
