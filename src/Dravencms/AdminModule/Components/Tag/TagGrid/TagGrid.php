@@ -102,7 +102,7 @@ class TagGrid extends BaseControl
                 ->setIcon('trash')
                 ->setTitle('Smazat')
                 ->setClass('btn btn-xs btn-danger ajax')
-                ->setConfirm('Do you really want to delete row %s?', 'name');
+                ->setConfirm('Do you really want to delete row %s?', 'identifier');
             $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'handleDelete'];
         }
 
