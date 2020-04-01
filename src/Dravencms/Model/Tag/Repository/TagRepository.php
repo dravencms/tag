@@ -40,6 +40,14 @@ class TagRepository
     }
 
     /**
+     * @return Tag[]
+     */
+    public function getAll()
+    {
+        return $this->tagRepository->findAll();
+    }
+    
+    /**
      * @param $id
      * @return null|Tag
      */
