@@ -93,6 +93,7 @@ class TagForm extends BaseControl
             foreach ($this->tag->getTranslations() AS $translation)
             {
                 $defaults[$translation->getLocale()->getLanguageCode()]['name'] = $translation->getName();
+                $defaults[$translation->getLocale()->getLanguageCode()]['description'] = $translation->getDescription();
             }
 
             $this['form']->setDefaults($defaults);
@@ -111,6 +112,10 @@ class TagForm extends BaseControl
             $container->addText('name')
                 ->setRequired('Please enter tag name.')
                 ->addRule(Form::MAX_LENGTH, 'Tag name name is too long.', 255);
+
+            $container->addTextArea('description')
+                ->setRequired('Please enter description.')
+                ->addRule(Form::MAX_LENGTH, 'Description message is too long.', 2000);
         }
 
         $form->addText('identifier')
@@ -169,13 +174,15 @@ class TagForm extends BaseControl
             if ($bonusTranslation = $this->tagTranslationRepository->getTranslation($tag, $activeLocale))
             {
                 $bonusTranslation->setName($values->{$activeLocale->getLanguageCode()}->name);
+                $bonusTranslation->setDescription($values->{$activeLocale->getLanguageCode()}->description);
             }
             else
             {
                 $bonusTranslation = new TagTranslation(
                     $tag,
                     $activeLocale,
-                    $values->{$activeLocale->getLanguageCode()}->name
+                    $values->{$activeLocale->getLanguageCode()}->name,
+                    $values->{$activeLocale->getLanguageCode()}->description
                 );
             }
             $this->entityManager->persist($bonusTranslation);
