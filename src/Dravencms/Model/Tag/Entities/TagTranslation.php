@@ -33,6 +33,12 @@ class TagTranslation
     private $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="text",nullable=false)
+     */
+    private $description;
+
+    /**
      * @var Tag
      * @ORM\ManyToOne(targetEntity="Tag", inversedBy="translations")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
@@ -47,13 +53,15 @@ class TagTranslation
 
     /**
      * TagTranslation constructor.
-     * @param string $name
      * @param Tag $tag
      * @param Locale $locale
+     * @param string $name
+     * @param string $description
      */
-    public function __construct(Tag $tag, Locale $locale, $name)
+    public function __construct(Tag $tag, Locale $locale, string $name, string $description)
     {
         $this->name = $name;
+        $this->description = $description;
         $this->tag = $tag;
         $this->locale = $locale;
     }
@@ -64,6 +72,14 @@ class TagTranslation
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -85,9 +101,17 @@ class TagTranslation
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     /**
