@@ -57,6 +57,14 @@ class TagRepository
     }
 
     /**
+     * @param array $parameters
+     * @return Tag|null
+     */
+    public function getOneByParameters(array $parameters) {
+        return $this->tagRepository->findOneBy($parameters);
+    }
+    
+    /**
      * @param $identifier
      * @return null|Tag
      */
