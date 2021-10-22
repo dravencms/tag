@@ -19,9 +19,6 @@
     "dravencms/admin": ">=2.0",
     "nette/di": ">=3.0"
   },
-  "suggest": {
-    "dravencms/structure": "Install dravencms/structure module for frontend tag components to work"
-  },
   "autoload": {
     "psr-0": {
       "Dravencms\\": "src/"
