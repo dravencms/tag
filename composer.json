@@ -15,10 +15,12 @@
     }
   ],
   "require": {
-    "dravencms/locale": "^v1.0"
+    "dravencms/locale": ">=v1.1.0",
+    "dravencms/admin": ">=2.0",
+    "nette/di": ">=3.0"
   },
-  "require-dev": {
-    "nette/tester": "@dev"
+  "suggest": {
+    "dravencms/cms": "Install dravencms/cms module for frontend tag components to work"
   },
   "autoload": {
     "psr-0": {
@@ -27,20 +29,7 @@
   },
   "extra": {
     "dravencms": {
-      "configuration": {
-        "extensions": {
-          "tag": "Dravencms\\Tag\\DI\\TagExtension"
-        },
-        "doctrine":{
-          "metadata": {
-            "Dravencms\\Model\\Tag": "%appDir%/../vendor/dravencms/tag/src/Dravencms/Model/Tag"
-          }
-        }
-      },
-      "scripts": {
-        "post-install": "Dravencms\\Tag\\Script\\PostInstall",
-        "pre-uninstall": "Dravencms\\Tag\\Script\\PreUninstall"
-      }
+      "configuration": "dravencms.config.neon"
     }
   }
 }

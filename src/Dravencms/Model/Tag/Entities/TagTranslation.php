@@ -1,17 +1,15 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
 
 namespace Dravencms\Model\Tag\Entities;
 
-use Dravencms\Model\Article\Entities\Article;
-use Dravencms\Model\Gallery\Entities\Picture;
 use Dravencms\Model\Locale\Entities\Locale;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Dravencms\Database\Attributes\Identifier;
 use Nette;
 
 /**
@@ -69,7 +67,7 @@ class TagTranslation
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -77,7 +75,7 @@ class TagTranslation
     /**
      * @param string $description
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -85,7 +83,7 @@ class TagTranslation
     /**
      * @param Tag $tag
      */
-    public function setTag(Tag $tag)
+    public function setTag(Tag $tag): void
     {
         $this->tag = $tag;
     }
@@ -93,7 +91,7 @@ class TagTranslation
     /**
      * @param Locale $locale
      */
-    public function setLocale(Locale $locale)
+    public function setLocale(Locale $locale): void
     {
         $this->locale = $locale;
     }
@@ -117,7 +115,7 @@ class TagTranslation
     /**
      * @return Tag
      */
-    public function getTag()
+    public function getTag(): Tag
     {
         return $this->tag;
     }
@@ -125,7 +123,7 @@ class TagTranslation
     /**
      * @return Locale
      */
-    public function getLocale()
+    public function getLocale(): Locale
     {
         return $this->locale;
     }

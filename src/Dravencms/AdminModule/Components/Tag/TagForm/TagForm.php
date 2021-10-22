@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  *
@@ -27,8 +27,9 @@ use Dravencms\Model\Tag\Entities\Tag;
 use Dravencms\Model\Tag\Entities\TagTranslation;
 use Dravencms\Model\Tag\Repository\TagRepository;
 use Dravencms\Model\Tag\Repository\TagTranslationRepository;
-use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Form;
+use Dravencms\Database\EntityManager;
+use Dravencms\Components\BaseForm\Form;
+use Nette\Security\User;
 
 /**
  * Description of TagForm
@@ -52,6 +53,9 @@ class TagForm extends BaseControl
     /** @var TagTranslationRepository */
     private $tagTranslationRepository;
 
+    /** @var User */
+    private $user;
+
     /** @var Tag */
     private $tag = null;
 
@@ -65,6 +69,7 @@ class TagForm extends BaseControl
      * @param TagRepository $tagRepository
      * @param TagTranslationRepository $tagTranslationRepository
      * @param LocaleRepository $localeRepository
+     * @param User $user
      * @param Tag|null $tag
      */
     public function __construct(
@@ -73,16 +78,16 @@ class TagForm extends BaseControl
         TagRepository $tagRepository,
         TagTranslationRepository $tagTranslationRepository,
         LocaleRepository $localeRepository,
+        User $user,
         Tag $tag = null
     ) {
-        parent::__construct();
-
         $this->tag = $tag;
         $this->baseFormFactory = $baseFormFactory;
         $this->entityManager = $entityManager;
         $this->tagRepository = $tagRepository;
         $this->tagTranslationRepository = $tagTranslationRepository;
         $this->localeRepository = $localeRepository;
+        $this->user = $user;
 
 
         if ($this->tag) {
@@ -101,9 +106,9 @@ class TagForm extends BaseControl
     }
 
     /**
-     * @return \Dravencms\Components\BaseForm\BaseForm
+     * @return Form
      */
-    protected function createComponentForm()
+    protected function createComponentForm(): Form
     {
         $form = $this->baseFormFactory->create();
 
@@ -131,8 +136,9 @@ class TagForm extends BaseControl
 
     /**
      * @param Form $form
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function editFormValidate(Form $form)
+    public function editFormValidate(Form $form): void
     {
         $values = $form->getValues();
 
@@ -146,7 +152,7 @@ class TagForm extends BaseControl
             }
         }
 
-        if (!$this->presenter->isAllowed('tag', 'edit')) {
+        if (!$this->user->isAllowed('tag', 'edit')) {
             $form->addError('Nemáte oprávění editovat tag.');
         }
     }
@@ -155,7 +161,7 @@ class TagForm extends BaseControl
      * @param Form $form
      * @throws \Exception
      */
-    public function editFormSucceeded(Form $form)
+    public function editFormSucceeded(Form $form): void
     {
         $values = $form->getValues();
 
@@ -192,7 +198,7 @@ class TagForm extends BaseControl
         $this->onSuccess();
     }
 
-    public function render()
+    public function render(): void
     {
         $template = $this->template;
         $template->activeLocales = $this->localeRepository->getActive();

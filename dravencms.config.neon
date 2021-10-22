@@ -1,0 +1,7 @@
+extensions:
+    tag: Dravencms\Tag\DI\TagExtension
+
+
+nettrine.orm.annotations:
+    mapping:
+        Dravencms\Model\Tag: %appDir%/../vendor/dravencms/tag/src/Dravencms/Model/Tag

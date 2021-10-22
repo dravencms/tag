@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /*
  * To change this template, choose Tools | Templates
@@ -7,7 +7,9 @@
 
 namespace Dravencms\AdminModule\TagModule;
 
+use Dravencms\AdminModule\Components\Tag\TagForm\TagForm;
 use Dravencms\AdminModule\Components\Tag\TagForm\TagFormFactory;
+use Dravencms\AdminModule\Components\Tag\TagGrid\TagGrid;
 use Dravencms\AdminModule\Components\Tag\TagGrid\TagGridFactory;
 use Dravencms\AdminModule\SecuredPresenter;
 use Dravencms\Flash;
@@ -33,7 +35,7 @@ class TagPresenter extends SecuredPresenter
     /** @var null|Tag */
     private $tag = null;
 
-    public function renderDefault()
+    public function renderDefault(): void
     {
         $this->template->h1 = 'Tags';
     }
@@ -43,7 +45,7 @@ class TagPresenter extends SecuredPresenter
      * @param $id
      * @throws \Nette\Application\BadRequestException
      */
-    public function actionEdit($id)
+    public function actionEdit(int $id = null): void
     {
         if ($id) {
             $tag = $this->tagRepository->getOneById($id);
@@ -61,9 +63,9 @@ class TagPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \Dravencms\AdminModule\Components\Tag\TagForm\TagForm
+     * @return TagForm
      */
-    protected function createComponentFormTag()
+    protected function createComponentFormTag(): TagForm
     {
         $control = $this->tagFormFactory->create($this->tag);
         $control->onSuccess[] = function()
@@ -75,9 +77,9 @@ class TagPresenter extends SecuredPresenter
     }
 
     /**
-     * @return \Dravencms\AdminModule\Components\Tag\TagGrid\TagGrid
+     * @return TagGrid
      */
-    public function createComponentGridTag()
+    public function createComponentGridTag(): TagGrid
     {
         $control = $this->tagGridFactory->create();
         $control->onDelete[] = function()

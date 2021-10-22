@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Copyright (C) 2016 Adam Schubert <adam.schubert@sg1-game.net>.
  */
@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Dravencms\Model\User\Entities\AclOperation;
 use Dravencms\Model\User\Entities\AclResource;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class AclOperationFixtures extends AbstractFixture implements DependentFixtureInterface
 {
@@ -23,9 +23,10 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
         $operations = [
             'tag' => [
                 'edit' => 'Umožnuje editaci tag',
-                'delete' => 'Umožnuje smazání tag	',
+                'delete' => 'Umožnuje smazání tag',
             ]
         ];
+
         foreach ($operations AS $resourceName => $operationList)
         {
             /** @var AclResource $aclResource */
@@ -41,12 +42,13 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
         }
         $manager->flush();
     }
+
     /**
      * Get the order of this fixture
      *
-     * @return integer
+     * @return array
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return ['Dravencms\Model\Tag\Fixtures\AclResourceFixtures', 'Dravencms\Model\User\Fixtures\GroupFixtures'];
     }
