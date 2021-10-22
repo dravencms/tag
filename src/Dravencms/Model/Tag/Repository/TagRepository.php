@@ -5,16 +5,12 @@
 
 namespace Dravencms\Model\Tag\Repository;
 
-use Dravencms\Locale\TLocalizedRepository;
 use Dravencms\Model\Tag\Entities\Tag;
-use Gedmo\Translatable\TranslatableListener;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
-use Dravencms\Model\Locale\Entities\ILocale;
+use Dravencms\Database\EntityManager;
 
 class TagRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|Tag */
     private $tagRepository;
 
     /** @var EntityManager */
@@ -51,7 +47,7 @@ class TagRepository
      * @param $id
      * @return null|Tag
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?Tag
     {
         return $this->tagRepository->find($id);
     }
@@ -60,26 +56,25 @@ class TagRepository
      * @param array $parameters
      * @return Tag|null
      */
-    public function getOneByParameters(array $parameters) {
+    public function getOneByParameters(array $parameters): ?Tag {
         return $this->tagRepository->findOneBy($parameters);
     }
-    
+
     /**
-     * @param $identifier
-     * @return null|Tag
+     * @param string $identifier
+     * @return Tag|null
      */
-    public function getOneByIdentifier($identifier)
+    public function getOneByIdentifier(string $identifier): ?Tag
     {
         return $this->tagRepository->findOneBy(['identifier' => $identifier]);
     }
 
     /**
-     * @param $identifier
+     * @param string $identifier
      * @param Tag|null $ignoreTag
-     * @return boolean
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isIdentifierFree($identifier, Tag $ignoreTag = null)
+    public function isIdentifierFree(string $identifier, Tag $ignoreTag = null): bool
     {
         $qb = $this->tagRepository->createQueryBuilder('t')
             ->select('t')
@@ -100,7 +95,7 @@ class TagRepository
     }
 
     /**
-     * @return \Kdyby\Doctrine\QueryBuilder
+     * @return mixed
      */
     public function getTagQueryBuilder()
     {
@@ -112,7 +107,7 @@ class TagRepository
     /**
      * @return array
      */
-    public function getPairs()
+    public function getPairs(): array
     {
         return $this->tagRepository->findPairs('identifier');
     }

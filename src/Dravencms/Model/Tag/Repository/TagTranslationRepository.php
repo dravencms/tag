@@ -5,17 +5,14 @@
 
 namespace Dravencms\Model\Tag\Repository;
 
-use Dravencms\Locale\TLocalizedRepository;
 use Dravencms\Model\Tag\Entities\Tag;
 use Dravencms\Model\Tag\Entities\TagTranslation;
-use Gedmo\Translatable\TranslatableListener;
-use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Dravencms\Database\EntityManager;
 use Dravencms\Model\Locale\Entities\ILocale;
 
 class TagTranslationRepository
 {
-    /** @var \Kdyby\Doctrine\EntityRepository */
+    /** @var \Doctrine\Persistence\ObjectRepository|TagTranslation */
     private $tagTranslationRepository;
 
     /** @var EntityManager */
@@ -44,28 +41,27 @@ class TagTranslationRepository
      * @param $id
      * @return null|TagTranslation
      */
-    public function getOneById($id)
+    public function getOneById(int $id): ?TagTranslation
     {
         return $this->tagTranslationRepository->find($id);
     }
 
     /**
-     * @param $name
-     * @return null|TagTranslation
+     * @param string $name
+     * @return TagTranslation|null
      */
-    public function getOneByName($name)
+    public function getOneByName(string $name): ?TagTranslation
     {
         return $this->tagTranslationRepository->findOneBy(['name' => $name]);
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param ILocale $locale
      * @param Tag|null $ignoreTag
-     * @return boolean
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return bool
      */
-    public function isNameFree($name, ILocale $locale, Tag $ignoreTag = null)
+    public function isNameFree(string $name, ILocale $locale, Tag $ignoreTag = null): bool
     {
         $qb = $this->tagTranslationRepository->createQueryBuilder('tt')
             ->select('tt')
@@ -93,7 +89,7 @@ class TagTranslationRepository
      * @param ILocale $locale
      * @return null|TagTranslation
      */
-    public function getTranslation(Tag $tag, ILocale $locale)
+    public function getTranslation(Tag $tag, ILocale $locale): ?TagTranslation
     {
         return $this->tagTranslationRepository->findOneBy(['tag' => $tag, 'locale' => $locale]);
     }
