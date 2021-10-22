@@ -20,7 +20,7 @@
     "nette/di": ">=3.0"
   },
   "suggest": {
-    "dravencms/cms": "Install dravencms/cms module for frontend tag components to work"
+    "dravencms/structure": "Install dravencms/structure module for frontend tag components to work"
   },
   "autoload": {
     "psr-0": {
