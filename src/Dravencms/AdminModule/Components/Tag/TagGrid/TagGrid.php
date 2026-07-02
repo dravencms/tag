@@ -29,7 +29,7 @@ use Dravencms\Model\Locale\Entities\Locale;
 use Dravencms\Model\Tag\Repository\TagRepository;
 use Dravencms\Database\EntityManager;
 use Nette\Security\User;
-use Ublaboo\DataGrid\Column\Action\Confirmation\StringConfirmation;
+use Contributte\Datagrid\Column\Action\Confirmation\StringConfirmation;
 
 /**
  * Description of TagGrid
