@@ -28,5 +28,5 @@ interface TagFormFactory
      * @param Tag|null $tag
      * @return TagForm
      */
-    public function create(Tag $tag = null): TagForm;
+    public function create(?Tag $tag = null): TagForm;
 }

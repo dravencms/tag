@@ -2,6 +2,12 @@ extensions:
     tag: Dravencms\Tag\DI\TagExtension
 
 
-nettrine.orm.annotations:
-    mapping:
-        Dravencms\Model\Tag: %appDir%/../vendor/dravencms/tag/src/Dravencms/Model/Tag
+nettrine.orm:
+    managers:
+        default:
+            mapping:
+                DravencmsTag:
+                    type: attributes
+                    directories:
+                        - %appDir%/../vendor/dravencms/tag/src/Dravencms/Model/Tag
+                    namespace: Dravencms\Model\Tag

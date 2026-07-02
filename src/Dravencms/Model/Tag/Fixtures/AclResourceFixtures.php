@@ -16,12 +16,12 @@ class AclResourceFixtures extends AbstractFixture
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $resources = [
             'tag' => 'Tag'
         ];
-        foreach ($resources AS $resourceName => $resourceDescription)
+        foreach ($resources as $resourceName => $resourceDescription)
         {
             $aclResource = new AclResource($resourceName, $resourceDescription);
             $manager->persist($aclResource);

@@ -7,7 +7,7 @@
     "tag"
   ],
   "license": [
-    "LGPL-3.0"
+    "LGPL-3.0-only"
   ],
   "authors": [
     {
@@ -15,9 +15,9 @@
     }
   ],
   "require": {
-    "dravencms/locale": ">=v1.1.0",
-    "dravencms/admin": ">=2.0",
-    "nette/di": ">=3.0"
+    "dravencms/locale": "^2.1",
+    "dravencms/admin": "^2.3",
+    "nette/di": "^3.2.6"
   },
   "autoload": {
     "psr-0": {

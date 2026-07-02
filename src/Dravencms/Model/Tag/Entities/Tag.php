@@ -7,18 +7,17 @@ namespace Dravencms\Model\Tag\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Dravencms\Database\Attributes\Identifier;
+use Dravencms\Database\Attributes\TimestampableEntity;
 use Nette;
 
 /**
  * Class Tag
  * @package App\Model\Structure\Entities
- * @ORM\Entity
- * @ORM\Table(name="tagTag")
  */
+#[ORM\Entity]
+#[ORM\Table(name: "tagTag")]
 class Tag
 {
     use Nette\SmartObject;
@@ -27,14 +26,14 @@ class Tag
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255, nullable=false)
      */
+    #[ORM\Column(type: "string", length: 255, nullable: false)]
     private $identifier;
 
     /**
      * @var ArrayCollection|TagTranslation[]
-     * @ORM\OneToMany(targetEntity="TagTranslation", mappedBy="tag",cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: "TagTranslation", mappedBy: "tag", cascade: ["persist", "remove"])]
     private $translations;
 
     /**

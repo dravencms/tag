@@ -74,14 +74,12 @@ class TagRepository
      * @param Tag|null $ignoreTag
      * @return bool
      */
-    public function isIdentifierFree(string $identifier, Tag $ignoreTag = null): bool
+    public function isIdentifierFree(string $identifier, ?Tag $ignoreTag = null): bool
     {
         $qb = $this->tagRepository->createQueryBuilder('t')
             ->select('t')
             ->where('t.identifier = :identifier')
-            ->setParameters([
-                'identifier' => $identifier
-            ]);
+            ->setParameter('identifier', $identifier);
 
         if ($ignoreTag)
         {

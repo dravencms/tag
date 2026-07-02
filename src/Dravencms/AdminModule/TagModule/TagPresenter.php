@@ -45,7 +45,7 @@ class TagPresenter extends SecuredPresenter
      * @param $id
      * @throws \Nette\Application\BadRequestException
      */
-    public function actionEdit(int $id = null): void
+    public function actionEdit(?int $id = null): void
     {
         if ($id) {
             $tag = $this->tagRepository->getOneById($id);

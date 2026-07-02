@@ -61,17 +61,15 @@ class TagTranslationRepository
      * @param Tag|null $ignoreTag
      * @return bool
      */
-    public function isNameFree(string $name, ILocale $locale, Tag $ignoreTag = null): bool
+    public function isNameFree(string $name, ILocale $locale, ?Tag $ignoreTag = null): bool
     {
         $qb = $this->tagTranslationRepository->createQueryBuilder('tt')
             ->select('tt')
             ->join('tt.tag', 't')
             ->where('tt.name = :name')
             ->andWhere('tt.locale = :locale')
-            ->setParameters([
-                'name' => $name,
-                'locale' => $locale
-            ]);
+            ->setParameter('name', $name)
+            ->setParameter('locale', $locale);
 
         if ($ignoreTag)
         {

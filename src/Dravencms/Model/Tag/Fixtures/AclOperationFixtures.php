@@ -18,7 +18,7 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $operations = [
             'tag' => [
@@ -27,11 +27,11 @@ class AclOperationFixtures extends AbstractFixture implements DependentFixtureIn
             ]
         ];
 
-        foreach ($operations AS $resourceName => $operationList)
+        foreach ($operations as $resourceName => $operationList)
         {
             /** @var AclResource $aclResource */
             $aclResource = $this->getReference('user-acl-resource-'.$resourceName);
-            foreach ($operationList AS $operationName => $operationDescription)
+            foreach ($operationList as $operationName => $operationDescription)
             {
                 $aclOperation = new AclOperation($aclResource, $operationName, $operationDescription);
                 //Allow all operations to administrator group

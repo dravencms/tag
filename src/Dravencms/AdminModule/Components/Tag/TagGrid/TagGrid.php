@@ -130,7 +130,7 @@ class TagGrid extends BaseControl
     public function handleDelete($id): void
     {
         $tags = $this->tagRepository->getById($id);
-        foreach ($tags AS $tag)
+        foreach ($tags as $tag)
         {
             $this->entityManager->remove($tag);
         }

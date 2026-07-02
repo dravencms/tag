@@ -79,7 +79,7 @@ class TagForm extends BaseControl
         TagTranslationRepository $tagTranslationRepository,
         LocaleRepository $localeRepository,
         User $user,
-        Tag $tag = null
+        ?Tag $tag = null
     ) {
         $this->tag = $tag;
         $this->baseFormFactory = $baseFormFactory;
@@ -88,21 +88,6 @@ class TagForm extends BaseControl
         $this->tagTranslationRepository = $tagTranslationRepository;
         $this->localeRepository = $localeRepository;
         $this->user = $user;
-
-
-        if ($this->tag) {
-            $defaults = [
-                'identifier' => $this->tag->getIdentifier()
-            ];
-
-            foreach ($this->tag->getTranslations() AS $translation)
-            {
-                $defaults[$translation->getLocale()->getLanguageCode()]['name'] = $translation->getName();
-                $defaults[$translation->getLocale()->getLanguageCode()]['description'] = $translation->getDescription();
-            }
-
-            $this['form']->setDefaults($defaults);
-        }
     }
 
     /**
@@ -131,6 +116,19 @@ class TagForm extends BaseControl
         $form->onValidate[] = [$this, 'editFormValidate'];
         $form->onSuccess[] = [$this, 'editFormSucceeded'];
 
+        if ($this->tag) {
+            $defaults = [
+                'identifier' => $this->tag->getIdentifier()
+            ];
+
+            foreach ($this->tag->getTranslations() as $translation) {
+                $defaults[$translation->getLocale()->getLanguageCode()]['name'] = $translation->getName();
+                $defaults[$translation->getLocale()->getLanguageCode()]['description'] = $translation->getDescription();
+            }
+
+            $form->setDefaults($defaults);
+        }
+
         return $form;
     }
 
@@ -146,7 +144,7 @@ class TagForm extends BaseControl
             $form->addError('Tento identifier je již zabrán.');
         }
 
-        foreach ($this->localeRepository->getActive() AS $activeLocale) {
+        foreach ($this->localeRepository->getActive() as $activeLocale) {
             if (!$this->tagTranslationRepository->isNameFree($values->{$activeLocale->getLanguageCode()}->name, $activeLocale, $this->tag)) {
                 $form->addError('Tento název je již zabrán.');
             }
@@ -176,7 +174,7 @@ class TagForm extends BaseControl
 
         $this->entityManager->flush();
         
-        foreach ($this->localeRepository->getActive() AS $activeLocale) {
+        foreach ($this->localeRepository->getActive() as $activeLocale) {
             if ($bonusTranslation = $this->tagTranslationRepository->getTranslation($tag, $activeLocale))
             {
                 $bonusTranslation->setName($values->{$activeLocale->getLanguageCode()}->name);
