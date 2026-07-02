@@ -1,6 +1,10 @@
 extensions:
     tag: Dravencms\Tag\DI\TagExtension
 
+services:
+    tag.tagPresenter:
+        class: Dravencms\AdminModule\TagModule\TagPresenter
+
 
 nettrine.orm:
     managers:
