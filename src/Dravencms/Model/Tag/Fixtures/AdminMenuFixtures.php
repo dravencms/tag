@@ -17,7 +17,7 @@ class AdminMenuFixtures extends AbstractFixture implements DependentFixtureInter
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $child = new Menu('Tags', ':Admin:Tag:Tag', 'fa-tags', $this->getReference('user-acl-operation-tag-edit'));
         $manager->persist($child);
