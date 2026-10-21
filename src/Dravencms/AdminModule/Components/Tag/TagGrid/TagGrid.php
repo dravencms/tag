@@ -87,7 +87,7 @@ class TagGrid extends BaseControl
     /**
      * @param $name
      * @return \Dravencms\Components\BaseGrid\Grid
-     * @throws \Ublaboo\DataGrid\Exception\DataGridException
+     * @throws \Contributte\Datagrid\Exception\DataGridException
      */
     public function createComponentGrid(string $name): Grid
     {

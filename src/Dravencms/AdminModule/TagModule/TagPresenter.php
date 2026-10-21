@@ -41,10 +41,10 @@ class TagPresenter extends SecuredPresenter
     }
 
     /**
-     * @isAllowed(tag,edit)
      * @param $id
      * @throws \Nette\Application\BadRequestException
      */
+    #[\Dravencms\User\Attributes\IsAllowed('tag', 'edit')]
     public function actionEdit(?int $id = null): void
     {
         if ($id) {
