@@ -1,0 +1,30 @@
+admin:
+    field:
+        name: Name
+        description: Description
+        identifier: Identifier
+        settings: Settings
+    action:
+        save: Save
+        edit: Edit
+        delete: Delete
+        exportAll: CSV export
+        exportFiltered: 'CSV export (filtered)'
+    title:
+        tags: Tags
+        create: New tag
+        edit: 'Edit tag "%identifier%"'
+    validation:
+        nameRequired: Please enter a tag name.
+        nameTooLong: The tag name must not exceed %d characters.
+        descriptionRequired: Please enter a description.
+        descriptionTooLong: The description must not exceed %d characters.
+        identifierRequired: Please enter an identifier.
+        identifierTaken: This identifier is already in use.
+        nameTaken: This name is already in use.
+        editForbidden: You do not have permission to edit tags.
+    confirm:
+        delete: 'Are you sure you want to delete tag "%s"?'
+    flash:
+        saved: The tag has been saved.
+        deleted: The tag has been deleted.

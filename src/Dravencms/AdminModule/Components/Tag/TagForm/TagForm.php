@@ -100,18 +100,18 @@ class TagForm extends BaseControl
         foreach ($this->localeRepository->getActive() as $activeLocale) {
             $container = $form->addContainer($activeLocale->getLanguageCode());
             $container->addText('name')
-                ->setRequired('Please enter tag name.')
-                ->addRule(Form::MAX_LENGTH, 'Tag name name is too long.', 255);
+                ->setRequired('tag.admin.validation.nameRequired')
+                ->addRule(Form::MAX_LENGTH, 'tag.admin.validation.nameTooLong', 255);
 
             $container->addTextArea('description')
-                ->setRequired('Please enter description.')
-                ->addRule(Form::MAX_LENGTH, 'Description message is too long.', 2000);
+                ->setRequired('tag.admin.validation.descriptionRequired')
+                ->addRule(Form::MAX_LENGTH, 'tag.admin.validation.descriptionTooLong', 2000);
         }
 
         $form->addText('identifier')
-            ->setRequired('Please fill in an identifier');
+            ->setRequired('tag.admin.validation.identifierRequired');
 
-        $form->addSubmit('send');
+        $form->addSubmit('send', 'tag.admin.action.save');
 
         $form->onValidate[] = [$this, 'editFormValidate'];
         $form->onSuccess[] = [$this, 'editFormSucceeded'];
@@ -141,17 +141,17 @@ class TagForm extends BaseControl
         $values = $form->getValues();
 
         if (!$this->tagRepository->isIdentifierFree($values->identifier, $this->tag)) {
-            $form->addError('Tento identifier je již zabrán.');
+            $form->addError('tag.admin.validation.identifierTaken');
         }
 
         foreach ($this->localeRepository->getActive() as $activeLocale) {
             if (!$this->tagTranslationRepository->isNameFree($values->{$activeLocale->getLanguageCode()}->name, $activeLocale, $this->tag)) {
-                $form->addError('Tento název je již zabrán.');
+                $form->addError('tag.admin.validation.nameTaken');
             }
         }
 
         if (!$this->user->isAllowed('tag', 'edit')) {
-            $form->addError('Nemáte oprávění editovat tag.');
+            $form->addError('tag.admin.validation.editForbidden');
         }
     }
 

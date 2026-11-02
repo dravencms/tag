@@ -2,6 +2,7 @@
 
 namespace Dravencms\Tag\DI;
 
+use Contributte\Translation\DI\TranslationProviderInterface;
 use Dravencms\Tag\Tag;
 
 use Nette\DI\CompilerExtension;
@@ -10,8 +11,12 @@ use Nette\DI\CompilerExtension;
  * Class TagExtension
  * @package Dravencms\Tag\DI
  */
-class TagExtension extends CompilerExtension
+class TagExtension extends CompilerExtension implements TranslationProviderInterface
 {
+    public function getTranslationResources(): array
+    {
+        return [__DIR__ . '/../lang'];
+    }
 
     public function loadConfiguration()
     {

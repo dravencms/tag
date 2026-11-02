@@ -1,0 +1,30 @@
+admin:
+    field:
+        name: Název
+        description: Popis
+        identifier: Identifikátor
+        settings: Nastavení
+    action:
+        save: Uložit
+        edit: Upravit
+        delete: Smazat
+        exportAll: Export CSV
+        exportFiltered: 'Export CSV (filtrovaný)'
+    title:
+        tags: Štítky
+        create: Nový štítek
+        edit: 'Upravit štítek "%identifier%"'
+    validation:
+        nameRequired: Zadejte prosím název štítku.
+        nameTooLong: Název štítku může mít nejvýše %d znaků.
+        descriptionRequired: Zadejte prosím popis.
+        descriptionTooLong: Popis může mít nejvýše %d znaků.
+        identifierRequired: Zadejte prosím identifikátor.
+        identifierTaken: Tento identifikátor je již používán.
+        nameTaken: Tento název je již používán.
+        editForbidden: Nemáte oprávnění upravovat štítky.
+    confirm:
+        delete: 'Opravdu chcete smazat štítek "%s"?'
+    flash:
+        saved: Štítek byl uložen.
+        deleted: Štítek byl smazán.

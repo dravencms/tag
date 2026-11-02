@@ -95,30 +95,30 @@ class TagGrid extends BaseControl
 
         $grid->setDataSource($this->tagRepository->getTagQueryBuilder());
 
-        $grid->addColumnText('identifier', 'Identifier')
+        $grid->addColumnText('identifier', 'tag.admin.field.identifier')
             ->setSortable()
             ->setFilterText();
 
         if ($this->user->isAllowed('tag', 'edit')) {
             $grid->addAction('edit', '')
                 ->setIcon('pencil')
-                ->setTitle('Upravit')
+                ->setTitle('tag.admin.action.edit')
                 ->setClass('btn btn-sm btn-primary');
         }
 
         if ($this->user->isAllowed('tag', 'delete')) {
             $grid->addAction('delete', '', 'delete!')
                 ->setIcon('trash')
-                ->setTitle('Smazat')
+                ->setTitle('tag.admin.action.delete')
                 ->setClass('btn btn-sm btn-danger ajax')
-                ->setConfirmation(new StringConfirmation('Do you really want to delete row %s?', 'identifier'));
-            $grid->addGroupAction('Smazat')->onSelect[] = [$this, 'handleDelete'];
+                ->setConfirmation(new StringConfirmation('tag.admin.confirm.delete', 'identifier'));
+            $grid->addGroupAction('tag.admin.action.delete')->onSelect[] = [$this, 'handleDelete'];
         }
 
-        $grid->addExportCsvFiltered('Csv export (filtered)', 'tag_filtered.csv')
-            ->setTitle('Csv export (filtered)');
-        $grid->addExportCsv('Csv export', 'tag_all.csv')
-            ->setTitle('Csv export');
+        $grid->addExportCsvFiltered('tag.admin.action.exportFiltered', 'tag_filtered.csv')
+            ->setTitle('tag.admin.action.exportFiltered');
+        $grid->addExportCsv('tag.admin.action.exportAll', 'tag_all.csv')
+            ->setTitle('tag.admin.action.exportAll');
 
         return $grid;
     }

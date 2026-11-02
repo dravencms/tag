@@ -37,7 +37,7 @@ class TagPresenter extends SecuredPresenter
 
     public function renderDefault(): void
     {
-        $this->template->h1 = 'Tags';
+        $this->template->h1 = $this->translator->translate('tag.admin.title.tags');
     }
 
     /**
@@ -56,9 +56,9 @@ class TagPresenter extends SecuredPresenter
 
             $this->tag = $tag;
 
-            $this->template->h1 = sprintf('Edit tag „%s“', $tag->getIdentifier());
+            $this->template->h1 = $this->translator->translate('tag.admin.title.edit', ['identifier' => $tag->getIdentifier()]);
         } else {
-            $this->template->h1 = 'New tag';
+            $this->template->h1 = $this->translator->translate('tag.admin.title.create');
         }
     }
 
@@ -70,7 +70,7 @@ class TagPresenter extends SecuredPresenter
         $control = $this->tagFormFactory->create($this->tag);
         $control->onSuccess[] = function()
         {
-            $this->flashMessage('Tag has been saved.', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('tag.admin.flash.saved'), Flash::SUCCESS);
             $this->redirect('Tag:');
         };
         return $control;
@@ -84,7 +84,7 @@ class TagPresenter extends SecuredPresenter
         $control = $this->tagGridFactory->create();
         $control->onDelete[] = function()
         {
-            $this->flashMessage('Tag has been deleted.', Flash::SUCCESS);
+            $this->flashMessage($this->translator->translate('tag.admin.flash.deleted'), Flash::SUCCESS);
             $this->redirect('Tag:');
         };
         return $control;
