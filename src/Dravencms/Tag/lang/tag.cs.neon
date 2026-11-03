@@ -28,3 +28,6 @@ admin:
     flash:
         saved: Štítek byl uložen.
         deleted: Štítek byl smazán.
+
+menu:
+    overview: 'Štítky'

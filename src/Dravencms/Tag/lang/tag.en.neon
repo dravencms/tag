@@ -28,3 +28,6 @@ admin:
     flash:
         saved: The tag has been saved.
         deleted: The tag has been deleted.
+
+menu:
+    overview: 'Tags'
