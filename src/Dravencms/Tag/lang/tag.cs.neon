@@ -31,3 +31,11 @@ admin:
 
 menu:
     overview: 'Štítky'
+
+acl:
+    resource: 'Štítky'
+    permissions:
+        edit:
+            label: 'Spravovat štítky'
+        delete:
+            label: 'Mazat štítky'

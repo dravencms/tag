@@ -31,3 +31,11 @@ admin:
 
 menu:
     overview: 'Tags'
+
+acl:
+    resource: 'Tags'
+    permissions:
+        edit:
+            label: 'Manage tags'
+        delete:
+            label: 'Delete tags'
