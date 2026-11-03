@@ -161,6 +161,7 @@ class TagForm extends BaseControl
      */
     public function editFormSucceeded(Form $form): void
     {
+        $this->requirePermission('tag', 'edit');
         $values = $form->getValues();
 
         if ($this->tag) {

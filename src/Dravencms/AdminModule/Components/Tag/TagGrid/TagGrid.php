@@ -92,6 +92,7 @@ class TagGrid extends BaseControl
     public function createComponentGrid(string $name): Grid
     {
         $grid = $this->baseGridFactory->create($this, $name);
+        $grid->setWritePermission('tag', 'edit');
 
         $grid->setDataSource($this->tagRepository->getTagQueryBuilder());
 
@@ -127,8 +128,11 @@ class TagGrid extends BaseControl
      * @param $id
      * @throws \Exception
      */
+    #[\Dravencms\User\Attributes\IsAllowed('tag', 'delete')]
+    #[\Dravencms\Security\Mutation]
     public function handleDelete($id): void
     {
+        $this->requirePermission('tag', 'delete');
         $tags = $this->tagRepository->getById($id);
         foreach ($tags as $tag)
         {

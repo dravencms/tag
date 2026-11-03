@@ -21,6 +21,7 @@ use Dravencms\Model\Tag\Repository\TagRepository;
  *
  * @author Adam Schubert
  */
+#[\Dravencms\User\Attributes\IsAllowed('tag', 'edit')]
 class TagPresenter extends SecuredPresenter
 {
     /** @var TagRepository @inject */
@@ -35,6 +36,7 @@ class TagPresenter extends SecuredPresenter
     /** @var null|Tag */
     private $tag = null;
 
+    #[\Dravencms\User\Attributes\IsAllowed('tag', 'edit')]
     public function renderDefault(): void
     {
         $this->template->h1 = $this->translator->translate('tag.admin.title.tags');
